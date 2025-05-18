@@ -1,4 +1,6 @@
 Revision history for Mojolicious::Plugin::CSRF
 
 {{$NEXT}}
+
+1.01      2025-05-18 08:32:39-07:00 America/Los_Angeles
         - First version, released on an unsuspecting world
