@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 
-use 5.010;
+use 5.016;
 
 use ExtUtils::MakeMaker;
 
@@ -14,7 +14,7 @@ my %WriteMakefileArgs = (
   },
   "DISTNAME" => "Mojolicious-Plugin-CSRF",
   "LICENSE" => "artistic_2",
-  "MIN_PERL_VERSION" => "5.010",
+  "MIN_PERL_VERSION" => "5.016",
   "NAME" => "Mojolicious::Plugin::CSRF",
   "PREREQ_PM" => {
     "Math::Random::Secure" => 0,
@@ -33,7 +33,7 @@ my %WriteMakefileArgs = (
     "Test2::V0" => 0,
     "Test::More" => 0
   },
-  "VERSION" => "0.1",
+  "VERSION" => "1.01",
   "test" => {
     "TESTS" => "t/*.t"
   }
