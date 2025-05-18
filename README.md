@@ -4,7 +4,7 @@ Mojolicious::Plugin::CSRF - Cross Site Request Forgery (CSRF) "prevention" Mojol
 
 # VERSION
 
-version 1.01
+version 1.02
 
 [![test](https://github.com/gryphonshafer/Mojo-Plugin-CSRF/workflows/test/badge.svg)](https://github.com/gryphonshafer/Mojo-Plugin-CSRF/actions?query=workflow%3Atest)
 [![codecov](https://codecov.io/gh/gryphonshafer/Mojo-Plugin-CSRF/graph/badge.svg)](https://codecov.io/gh/gryphonshafer/Mojo-Plugin-CSRF)
@@ -23,13 +23,21 @@ version 1.01
     my $result = $app->csrf->check;
 
     # Customized Mojolicious
+    use Crypt::Random;
+    use Mojo::DOM;
+    use Mojo::Util;
     $app->plugin( CSRF => {
-        generate_token => sub { md5_sum( rand() ) },
-        token_name     => 'csrf_token',
-        header         => 'X-CSRF-Token',
-        methods        => [ qw( POST PUT DELETE PATCH ) ],
-        include        => [ '^/' ],
-        exclude        => [ '^/api/[^/]+/user/log(?:in|out)/test$' ],
+        generate_token => sub {
+            Mojo::Util::md5_sum(
+                '' . Crypt::Random::makerandom( Size => 50 )
+            )
+        },
+
+        token_name => 'csrf_token',
+        header     => 'X-CSRF-Token',
+        methods    => [ qw( POST PUT DELETE PATCH ) ],
+        include    => [ '^/' ],
+        exclude    => [ '^/api/[^/]+/user/log(?:in|out)/test$' ],
 
         on_success => sub {
             my ($c) = @_;

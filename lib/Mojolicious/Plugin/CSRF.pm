@@ -52,11 +52,11 @@ sub register {
 package Mojolicious::Plugin::CSRF::Base;
 
 use Mojo::Base -base;
-use Math::Random::Secure 'rand';
-use Mojo::Util 'md5_sum';
+use Crypt::Random;
+use Mojo::Util;
 
 has c              => undef;
-has generate_token => sub { sub { md5_sum( rand() ) } };
+has generate_token => sub { sub { Mojo::Util::md5_sum( '' . Crypt::Random::makerandom( Size => 50 ) ) } };
 has token_name     => 'csrf_token';
 has header         => 'X-CSRF-Token';
 has methods        => sub { [ qw( POST PUT DELETE PATCH ) ] };
@@ -175,13 +175,21 @@ my($app);
     my $result = $app->csrf->check;
 
     # Customized Mojolicious
+    use Crypt::Random;
+    use Mojo::DOM;
+    use Mojo::Util;
     $app->plugin( CSRF => {
-        generate_token => sub { md5_sum( rand() ) },
-        token_name     => 'csrf_token',
-        header         => 'X-CSRF-Token',
-        methods        => [ qw( POST PUT DELETE PATCH ) ],
-        include        => [ '^/' ],
-        exclude        => [ '^/api/[^/]+/user/log(?:in|out)/test$' ],
+        generate_token => sub {
+            Mojo::Util::md5_sum(
+                '' . Crypt::Random::makerandom( Size => 50 )
+            )
+        },
+
+        token_name => 'csrf_token',
+        header     => 'X-CSRF-Token',
+        methods    => [ qw( POST PUT DELETE PATCH ) ],
+        include    => [ '^/' ],
+        exclude    => [ '^/api/[^/]+/user/log(?:in|out)/test$' ],
 
         on_success => sub {
             my ($c) = @_;
