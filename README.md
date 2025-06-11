@@ -4,7 +4,7 @@ Mojolicious::Plugin::CSRF - Cross Site Request Forgery (CSRF) "prevention" Mojol
 
 # VERSION
 
-version 1.02
+version 1.03
 
 [![test](https://github.com/gryphonshafer/Mojo-Plugin-CSRF/workflows/test/badge.svg)](https://github.com/gryphonshafer/Mojo-Plugin-CSRF/actions?query=workflow%3Atest)
 [![codecov](https://codecov.io/gh/gryphonshafer/Mojo-Plugin-CSRF/graph/badge.svg)](https://codecov.io/gh/gryphonshafer/Mojo-Plugin-CSRF)

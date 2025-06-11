@@ -52,11 +52,10 @@ sub register {
 package Mojolicious::Plugin::CSRF::Base;
 
 use Mojo::Base -base;
-use Crypt::Random;
 use Mojo::Util;
 
 has c              => undef;
-has generate_token => sub { sub { Mojo::Util::md5_sum( '' . Crypt::Random::makerandom( Size => 50 ) ) } };
+has generate_token => sub { sub { Mojo::Util::md5_sum( $$ . time . rand ) } };
 has token_name     => 'csrf_token';
 has header         => 'X-CSRF-Token';
 has methods        => sub { [ qw( POST PUT DELETE PATCH ) ] };
